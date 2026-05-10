@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad Banner - Sudoku</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.banner-container {
+  width: 100%;
+  background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
+  border-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-family: 'Inter', system-ui, sans-serif;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.banner-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.banner-icon {
+  font-size: 2rem;
+  animation: bounce 1s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.banner-text {
+  flex: 1;
+}
+
+.banner-title {
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.banner-description {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.8rem;
+}
+
+.banner-button {
+  background: white;
+  color: #ff6b6b;
+  padding: 8px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.banner-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.banner-close {
+  background: rgba(0,0,0,0.3);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.banner-close:hover {
+  background: rgba(0,0,0,0.5);
+  transform: scale(1.1);
+}
+
+/* Versão compacta para mobile */
+@media (max-width: 600px) {
+  .banner-container {
+    padding: 10px 12px;
+  }
+  
+  .banner-icon {
+    font-size: 1.5rem;
+  }
+  
+  .banner-title {
+    font-size: 0.85rem;
+  }
+  
+  .banner-description {
+    font-size: 0.7rem;
+  }
+  
+  .banner-button {
+    padding: 6px 16px;
+    font-size: 0.75rem;
+  }
+}
+</style>
+</head>
+<body>
+<div class="banner-container" id="banner" onclick="handleBannerClick()">
+  <div class="banner-icon">🎮</div>
+  <div class="banner-text">
+    <div class="banner-title">✨ JOGOS PREMIUM ✨</div>
+    <div class="banner-description">Clique aqui e ganhe bônus especiais! 🎁</div>
+  </div>
+  <div class="banner-button" onclick="event.stopPropagation(); handleButtonClick()">Saiba Mais →</div>
+  <button class="banner-close" onclick="event.stopPropagation(); closeBanner()">✕</button>
+</div>
+
+<script>
+// Configuração do banner - você pode editar estas informações
+// e hospedar novamente para atualizar o anúncio
+const BANNER_CONFIG = {
+  // Tipo de anúncio: 'game', 'promo', 'app', 'default'
+  type: 'game',
+  
+  // URLs de destino
+  clickUrl: 'https://exemplo.com/promocao-especial',
+  buttonUrl: 'https://exemplo.com/ofertas',
+  
+  // Conteúdo do banner
+  content: {
+    icon: '🎮',
+    title: '✨ JOGOS PREMIUM ✨',
+    description: 'Clique aqui e ganhe bônus especiais! 🎁',
+    buttonText: 'Saiba Mais →'
+  },
+  
+  // Cores personalizadas
+  colors: {
+    gradient: '135deg, #ff6b6b, #4ecdc4, #45b7d1'
+  }
+};
+
+// Função para aplicar configurações
+function applyBannerConfig() {
+  const container = document.getElementById('banner');
+  const iconEl = document.querySelector('.banner-icon');
+  const titleEl = document.querySelector('.banner-title');
+  const descEl = document.querySelector('.banner-description');
+  const btnEl = document.querySelector('.banner-button');
+  
+  if (BANNER_CONFIG.content.icon) iconEl.textContent = BANNER_CONFIG.content.icon;
+  if (BANNER_CONFIG.content.title) titleEl.textContent = BANNER_CONFIG.content.title;
+  if (BANNER_CONFIG.content.description) descEl.textContent = BANNER_CONFIG.content.description;
+  if (BANNER_CONFIG.content.buttonText) btnEl.textContent = BANNER_CONFIG.content.buttonText;
+  
+  if (BANNER_CONFIG.colors.gradient) {
+    container.style.background = `linear-gradient(${BANNER_CONFIG.colors.gradient})`;
+  }
+}
+
+function handleBannerClick() {
+  // Registra clique (você pode adicionar analytics aqui)
+  console.log('Banner clicado:', new Date().toISOString());
+  
+  // Redireciona
+  if (BANNER_CONFIG.clickUrl && BANNER_CONFIG.clickUrl !== '#') {
+    window.open(BANNER_CONFIG.clickUrl, '_blank');
+  }
+  
+  // Opcional: enviar evento para analytics
+  // fetch('https://seu-analytics.com/click', { method: 'POST', body: JSON.stringify({banner: 'sudoku'}) })
+}
+
+function handleButtonClick() {
+  console.log('Botão do banner clicado:', new Date().toISOString());
+  
+  if (BANNER_CONFIG.buttonUrl && BANNER_CONFIG.buttonUrl !== '#') {
+    window.open(BANNER_CONFIG.buttonUrl, '_blank');
+  }
+}
+
+function closeBanner() {
+  const banner = document.getElementById('banner');
+  banner.style.display = 'none';
+  
+  // Salva preferência de fechamento em localStorage
+  localStorage.setItem('bannerClosed', 'true');
+  localStorage.setItem('bannerClosedTime', Date.now());
+}
+
+// Verificar se deve mostrar banner novamente após 24h
+function checkBannerStatus() {
+  const closed = localStorage.getItem('bannerClosed');
+  const closedTime = localStorage.getItem('bannerClosedTime');
+  
+  if (closed === 'true' && closedTime) {
+    const hoursPassed = (Date.now() - parseInt(closedTime)) / (1000 * 60 * 60);
+    if (hoursPassed < 24) {
+      document.getElementById('banner').style.display = 'none';
+    } else {
+      localStorage.removeItem('bannerClosed');
+      localStorage.removeItem('bannerClosedTime');
+    }
+  }
+}
+
+// Aplicar configuração e verificar status
+applyBannerConfig();
+checkBannerStatus();
+
+// Opcional: Expor função para atualização dinâmica via postMessage
+window.addEventListener('message', function(event) {
+  if (event.data && event.data.type === 'UPDATE_BANNER') {
+    Object.assign(BANNER_CONFIG, event.data.config);
+    applyBannerConfig();
+  }
+});
+</script>
+</body>
+</html>
