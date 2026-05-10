@@ -1,1 +1,81 @@
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oferta Especial - Sudoku</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0a0e27, #1a1a3e);
+            padding: 20px;
+        }
+        .card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 40px;
+            max-width: 500px;
+            text-align: center;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin-bottom: 16px;
+            font-size: 28px;
+        }
+        p {
+            margin-bottom: 24px;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+        .button {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            border: none;
+            padding: 12px 32px;
+            border-radius: 40px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon">🎁</div>
+        <h1>Oferta Especial!</h1>
+        <p>Parabéns! Você ganhou 50% de desconto em nosso pacote de jogos premium.</p>
+        <p>Use o código: <strong>SUDOKU50</strong></p>
+        <a href="#" class="button" id="resgatarBtn">Resgatar Oferta →</a>
+        <p style="margin-top: 20px; font-size: 12px;">👆 Clique no botão acima para resgatar</p>
+    </div>
+    <script>
+        document.getElementById('resgatarBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Oferta resgatada! Código: SUDOKU50');
+            // Aqui você pode redirecionar para outro link real
+            // window.location.href = 'https://seu-link-real.com';
+        });
+    </script>
+</body>
+</html>
