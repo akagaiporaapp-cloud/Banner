@@ -11,6 +11,13 @@
   box-sizing: border-box;
 }
 
+body {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 .banner-container {
   width: 100%;
   background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
@@ -25,6 +32,7 @@
   transition: transform 0.2s, box-shadow 0.2s;
   font-family: 'Inter', system-ui, sans-serif;
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-sizing: border-box;
 }
 
 .banner-container:hover {
@@ -35,6 +43,151 @@
 .banner-icon {
   font-size: 2rem;
   animation: bounce 1s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.banner-text {
+  flex: 1;
+}
+
+.banner-title {
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.banner-description {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.8rem;
+}
+
+.banner-button {
+  background: white;
+  color: #ff6b6b;
+  padding: 8px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.banner-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.banner-close {
+  background: rgba(0,0,0,0.3);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.banner-close:hover {
+  background: rgba(0,0,0,0.5);
+  transform: scale(1.1);
+}
+
+/* Versão compacta para mobile */
+@media (max-width: 600px) {
+  .banner-container {
+    padding: 10px 12px;
+  }
+  
+  .banner-icon {
+    font-size: 1.5rem;
+  }
+  
+  .banner-title {
+    font-size: 0.85rem;
+  }
+  
+  .banner-description {
+    font-size: 0.7rem;
+  }
+  
+  .banner-button {
+    padding: 6px 16px;
+    font-size: 0.75rem;
+  }
+}
+</style>
+</head>
+<body>
+<div class="banner-container" id="banner">
+  <div class="banner-icon">🎮</div>
+  <div class="banner-text">
+    <div class="banner-title">✨ JOGOS PREMIUM ✨</div>
+    <div class="banner-description">Clique aqui e ganhe bônus especiais! 🎁</div>
+  </div>
+  <div class="banner-button" id="bannerBtn">Saiba Mais →</div>
+  <button class="banner-close" id="closeBtn">✕</button>
+</div>
+
+<script>
+// Configuração do banner
+const BANNER_CONFIG = {
+  clickUrl: 'https://exemplo.com/promocao-especial',
+  buttonUrl: 'https://exemplo.com/ofertas'
+};
+
+// Função para comunicar altura ao iframe pai
+function sendHeightToParent() {
+  const height = document.body.scrollHeight;
+  if (window.parent !== window) {
+    window.parent.postMessage({
+      type: 'RESIZE_BANNER',
+      height: height
+    }, '*');
+  }
+}
+
+// Eventos
+document.getElementById('banner').addEventListener('click', (e) => {
+  if (e.target.id !== 'closeBtn' && e.target.id !== 'bannerBtn') {
+    window.open(BANNER_CONFIG.clickUrl, '_blank');
+  }
+});
+
+document.getElementById('bannerBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  window.open(BANNER_CONFIG.buttonUrl, '_blank');
+});
+
+document.getElementById('closeBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  document.getElementById('banner').style.display = 'none';
+  sendHeightToParent(); // Notifica que altura mudou
+});
+
+// Observa mudanças de altura
+const observer = new ResizeObserver(() => sendHeightToParent());
+observer.observe(document.body);
+
+// Envia altura inicial
+window.addEventListener('load', () => {
+  setTimeout(sendHeightToParent, 100);
+});
+</script>
+</body>
+</html>  animation: bounce 1s ease infinite;
 }
 
 @keyframes bounce {
